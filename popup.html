@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"> 
+  <title>Редактор статистики</title>
+  <style>
+    body { 
+      font-family: 'Segoe UI', sans-serif;
+      padding: 15px;
+      width: 320px;
+      background-color: #f9f9f9;
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 100px 1fr;
+      align-items: center;
+      gap: 8px;
+      margin: 6px 0;
+    }
+
+    .row label {
+      white-space: nowrap;
+      margin-right: 5px;
+    }
+
+    .row input[type="number"] {
+      width: 100%;
+      padding: 5px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .auto {
+      display: flex;
+      align-items: center;
+      font-size: 0.9em;
+      white-space: nowrap;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      font-weight: bold;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .status-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 10px 0;
+    }
+
+    .status-row input {
+      padding: 6px;
+      text-align: center;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .status-row .wide {
+      flex: 2;
+      min-width: 100px;
+    }
+
+    .status-row .half {
+      flex: 1;
+      min-width: 60px;
+    }
+
+    .status-icon {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .top-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .top-button:hover {
+      background-color: #218838;
+    }
+  </style>
+  
+  
+</head>
+<body>
+
+  <h3>Управление лидами</h3>
+
+  <div class="row">
+    <label>All Leads</label>
+    <input type="number" id="allLeads" value="0">
+    <label class="auto"><input type="checkbox" id="autoAll" checked> Auto</label>
+  </div>
+
+  <div class="row">
+    <label>Not Valid Leads</label>
+    <input type="number" id="notValidLeads" value="0">
+  </div>
+
+  <div class="row">
+    <label>Valid Leads</label>
+    <input type="number" id="validLeads" value="0">
+  </div>
+
+  <div class="row">
+    <label>Acquisitions</label>
+    <input type="number" id="acquisitions" value="0">
+  </div>
+
+  <div class="row">
+    <label>CR (%)</label>
+    <input type="number" id="cr" step="0.01" value="0.00">
+    <label class="auto"><input type="checkbox" id="autoCR" checked> Auto</label>
+  </div>
+
+  <div style="display: none;">
+    <input type="number" id="errorLeads" value="0">
+    <input type="number" id="testLeads" value="0">
+  </div>
+
+  <h3>Управление статусами</h3>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status1" class="wide" value="Invalid statuses">
+    <input type="text" id="status2" class="half" value="0.00%">
+    <input type="text" id="status3" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox1" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status4" class="wide" value="New">
+    <input type="text" id="status5" class="half" value="0.00%">
+    <input type="text" id="status6" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox2" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status7" class="wide" value="Duplicate">
+    <input type="text" id="status8" class="half" value="0.00%">
+    <input type="text" id="status9" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox3" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status10" class="wide" value="FTD">
+    <input type="text" id="status11" class="half" value="0.00%">
+    <input type="text" id="status12" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox4" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status13" class="wide" value="Call back">
+    <input type="text" id="status14" class="half" value="0.00%">
+    <input type="text" id="status15" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox5" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status16" class="wide" value="Wrong info">
+    <input type="text" id="status17" class="half" value="0.00%">
+    <input type="text" id="status18" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox6" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status19" class="wide" value="No answer">
+    <input type="text" id="status20" class="half" value="0.00%">
+    <input type="text" id="status21" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox7" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status22" class="wide" value="Wrong_Language">
+    <input type="text" id="status23" class="half" value="0.00%">
+    <input type="text" id="status24" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox8" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status25" class="wide" value="Wrong_Number">
+    <input type="text" id="status26" class="half" value="0.00%">
+    <input type="text" id="status27" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox9" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status28" class="wide" value="Not Interested">
+    <input type="text" id="status29" class="half" value="0.00%">
+    <input type="text" id="status30" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox10" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status31" class="wide" value="Nomoney">
+    <input type="text" id="status32" class="half" value="0.00%">
+    <input type="text" id="status33" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox11" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status34" class="wide" value="Potential low">
+    <input type="text" id="status35" class="half" value="0.00%">
+    <input type="text" id="status36" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox12" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status37" class="wide" value="Wrong_Person">
+    <input type="text" id="status38" class="half" value="0.00%">
+    <input type="text" id="status39" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox13" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status40" class="wide" value="Hung Up">
+    <input type="text" id="status41" class="half" value="0.00%">
+    <input type="text" id="status42" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox14" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status43" class="wide" value="Never registrated">
+    <input type="text" id="status44" class="half" value="0.00%">
+    <input type="text" id="status45" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox15" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+
+  <div class="status-row" style="display: flex; align-items: center; gap: 10px;">
+    <input type="text" id="status46" class="wide" value="Potential">
+    <input type="text" id="status47" class="half" value="0.00%">
+    <input type="text" id="status48" class="half" value="0">
+    <input type="checkbox" id="hideStatusesCheckbox16" style="width: 18px; height: 18px; margin-left: auto;">
+  </div>
+  
+  <button id="add-statuses">Добавить статусы</button>
+
+  <button id="hideElement">Скрыть статусы</button>
+
+  <button id="sendText">Обновить</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>

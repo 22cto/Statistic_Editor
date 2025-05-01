@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Statistic Editor v3.5",
+  "version": "3.5",
+  "description": "Вставляет текст в элемент на странице",
+  "permissions": ["activeTab", "scripting", "sidePanel"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "host_permissions": ["<all_urls>"],
+  "side_panel": {
+    "default_path": "panel.html"
+  }
+}
